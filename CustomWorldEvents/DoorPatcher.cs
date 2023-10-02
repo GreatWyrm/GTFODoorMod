@@ -13,18 +13,28 @@ public class DoorPatcher
         Logger.Sources.Add(DoorLogger);
         
         DoorLogger.LogInfo("Patching door method");
-        var originalInteractionEvent = typeof(LG_WeakDoor).GetMethod(nameof(LG_WeakDoor.AttemptOpenCloseInteraction));
+        var originalOpenCloseInteractionMethod = typeof(LG_WeakDoor).GetMethod(nameof(LG_WeakDoor.AttemptOpenCloseInteraction));
+        var originalInteractionAllowedMethod = typeof(LG_WeakDoor).GetMethod(nameof(LG_WeakDoor.InteractionAllowed));
         var harmony = new Harmony("com.giginss.doormod");
-        harmony.Patch(originalInteractionEvent, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(OpenCloseInteractionPrefix)));
+        harmony.Patch(originalOpenCloseInteractionMethod, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(OpenCloseInteractionPrefix)));
+        // Tried to use this to disable the HUD button interaction, but it didn't work
+        //harmony.Patch(originalInteractionAllowedMethod, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(InteractionAllowedPrefix)));
         DoorLogger.LogInfo("Patching successful!");
     }
 
     static bool OpenCloseInteractionPrefix(LG_WeakDoor __instance, bool onlyUnlock)
     {
-        DoorLogger.LogInfo($"Door interaction with {__instance.MapperDataID}");
         if (DoorLockTracker.IsDoorLocked(__instance.MapperDataID))
         {
-            DoorLogger.LogInfo($"Door interaction with {__instance.MapperDataID} was denied from the lock.");
+            return false;
+        }
+        return true;
+    }
+    
+    static bool InteractionAllowedPrefix(LG_WeakDoor __instance)
+    {
+        if (DoorLockTracker.IsDoorLocked(__instance.MapperDataID))
+        {
             return false;
         }
         return true;

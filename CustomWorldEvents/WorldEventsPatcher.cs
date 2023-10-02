@@ -22,10 +22,12 @@ public class WorldEventsPatcher
         EventsLogger.LogDebug("Creating door events");        
         LockAllDoorsInZone lockDoorsEvent = new();
         UnlockAllDoorsInZone unlockDoorsEvent = new();
+        OpenAllWeakDoorsInZone openAllDoorsEvent = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
         AddToCustomWorldEvents(unlockDoorsEvent);
+        AddToCustomWorldEvents(openAllDoorsEvent);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
@@ -59,11 +61,11 @@ public class WorldEventsPatcher
             if (_customWorldEvents.TryGetValue((int)eData.Type, out AbstractWorldEvent worldEvent))
             {
                 EventsLogger.LogDebug($"Triggering {worldEvent.Identifier}");
-                worldEvent.onEventTrigger(eventData: ref eData);
+                worldEvent.OnEventTrigger(eventData: ref eData);
             }
             else
             {
-                EventsLogger.LogInfo($"Key {eData.Type} exists in the custom world events dictionary but failed to retrieve it!?!?!?");
+                EventsLogger.LogError($"Key {eData.Type} exists in the custom world events dictionary but failed to retrieve it!?!?!?");
             }
             // Don't pass to original handler
             return false;

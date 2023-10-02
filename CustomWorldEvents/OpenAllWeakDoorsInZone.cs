@@ -4,9 +4,9 @@ using LevelGeneration;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
-public class UnlockAllDoorsInZone : AbstractWorldEvent
+public class OpenAllWeakDoorsInZone : AbstractWorldEvent
 {
-    public override String Identifier => "UnlockAllDoorsInZone";
+    public override String Identifier => "OpenAllWeakDoorsInZone";
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eData)
     {
@@ -15,12 +15,12 @@ public class UnlockAllDoorsInZone : AbstractWorldEvent
             var weakDoors = GetAllWeakDoorsInZone(targetZone);
             foreach (var weakDoor in weakDoors)
             {
-                DoorLockTracker.UnlockDoor(weakDoor.MapperDataID);
+                weakDoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.Open);
             }
         }
         else
         {
-            eventLogger.LogError("UnlockAllDoorsInZone event failed to get target zone!");
+            eventLogger.LogError("LockAllDoorsInZone event failed to get target zone!");
         }
     }
 }

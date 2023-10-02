@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BepInEx.Logging;
 using GameData;
 using LevelGeneration;
@@ -16,7 +17,7 @@ public abstract class AbstractWorldEvent
     // The Id to match against, must be a unique string
     public abstract String Identifier { get; }
 
-    public abstract void onEventTrigger(ref WardenObjectiveEventData eventData);
+    public abstract void OnEventTrigger(ref WardenObjectiveEventData eventData);
     
     protected static bool TryGetZone(WardenObjectiveEventData eventData, out LG_Zone zone)
     {
@@ -26,5 +27,25 @@ public abstract class AbstractWorldEvent
             return false;
         }
         return true;
+    }
+
+    protected static HashSet<LG_WeakDoor> GetAllWeakDoorsInZone(LG_Zone zone)
+    {
+        HashSet<LG_WeakDoor> set = new();
+        foreach (var courseNode in zone.m_courseNodes)
+        {
+            foreach (var coursePortal in courseNode.m_portals)
+            {
+                if (coursePortal.m_door?.DoorType != eLG_DoorType.Weak) continue;
+                
+                var weakDoor = coursePortal.m_door.TryCast<LG_WeakDoor>();
+                if (weakDoor != null)
+                {
+                    set.Add(weakDoor);
+                }
+            }
+        }
+
+        return set;
     }
 }
