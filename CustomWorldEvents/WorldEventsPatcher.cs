@@ -15,7 +15,7 @@ public class WorldEventsPatcher
     private static readonly int eWardenObjectiveEventTypeOffset = 50;
     private int currentCount = 0;
 
-    public WorldEventsPatcher()
+    public WorldEventsPatcher(Harmony harmony)
     {
         Logger.Sources.Add(EventsLogger);
         
@@ -37,7 +37,6 @@ public class WorldEventsPatcher
         EnumInjector.InjectEnumValues<eWardenObjectiveEventType>(_enumMapping);
         
         EventsLogger.LogDebug("Injection complete, patching...");
-        var harmony = new Harmony("com.giginss.doormod");
 
         var originalExecuteEvent = typeof(WorldEventManager).GetMethod(nameof(WorldEventManager.ExecuteEvent));
         harmony.Patch(originalExecuteEvent, prefix: new HarmonyMethod(typeof(WorldEventsPatcher), nameof(ExecuteEventPrefix)));

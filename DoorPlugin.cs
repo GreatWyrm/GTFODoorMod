@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using GTFODoorMod.CustomWorldEvents;
+using HarmonyLib;
 
 namespace GTFODoorMod;
 
@@ -14,7 +15,8 @@ public class DoorPlugin : BasePlugin
         Log.LogInfo("Plugin Giginss's Door Mod is loaded!");
         Log.LogInfo("Hello Complex!");
 
-        WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher();
-        DoorPatcher doorPatcher = new DoorPatcher();
+        var harmony = new Harmony("com.giginss.doormod");
+        WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher(harmony);
+        DoorPatcher doorPatcher = new DoorPatcher(harmony);
     }
 }

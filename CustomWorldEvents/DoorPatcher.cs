@@ -8,17 +8,16 @@ public class DoorPatcher
 {
     private static readonly ManualLogSource DoorLogger = new("giginss-doormod-door-patcher");
     
-    public DoorPatcher()
+    public DoorPatcher(Harmony harmony)
     {
         Logger.Sources.Add(DoorLogger);
         
         DoorLogger.LogInfo("Patching door method");
         var originalOpenCloseInteractionMethod = typeof(LG_WeakDoor).GetMethod(nameof(LG_WeakDoor.AttemptOpenCloseInteraction));
-        var originalInteractionAllowedMethod = typeof(LG_WeakDoor).GetMethod(nameof(LG_WeakDoor.InteractionAllowed));
-        var harmony = new Harmony("com.giginss.doormod");
+        var originalInteractionAllowedMethod = typeof(LG_WeakDoor).GetProperty(nameof(LG_WeakDoor.InteractionAllowed))?.GetGetMethod();
         harmony.Patch(originalOpenCloseInteractionMethod, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(OpenCloseInteractionPrefix)));
-        // Tried to use this to disable the HUD button interaction, but it didn't work
-        //harmony.Patch(originalInteractionAllowedMethod, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(InteractionAllowedPrefix)));
+        if (originalInteractionAllowedMethod != null)
+            harmony.Patch(originalInteractionAllowedMethod, prefix: new HarmonyMethod(typeof(DoorPatcher), nameof(InteractionAllowedPrefix)));
         DoorLogger.LogInfo("Patching successful!");
     }
 
