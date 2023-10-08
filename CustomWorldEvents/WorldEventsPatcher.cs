@@ -1,8 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using BepInEx.Logging;
 using GameData;
+using GTFO.API.Utilities;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
+using UnityEngine;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -17,7 +20,7 @@ public class WorldEventsPatcher
 
     public WorldEventsPatcher(Harmony harmony)
     {
-        Logger.Sources.Add(EventsLogger);
+        BepInEx.Logging.Logger.Sources.Add(EventsLogger);
         
         EventsLogger.LogDebug("Creating door events");        
         LockAllDoorsInZone lockDoorsEvent = new();
@@ -60,7 +63,15 @@ public class WorldEventsPatcher
             if (_customWorldEvents.TryGetValue((int)eData.Type, out AbstractWorldEvent worldEvent))
             {
                 EventsLogger.LogDebug($"Triggering {worldEvent.Identifier}");
-                worldEvent.OnEventTrigger(eventData: ref eData);
+                float delay = eData.Delay;
+                if (delay > 0)
+                {
+                    CoroutineDispatcher.StartCoroutine(ExecuteEventCoroutine(worldEvent, eData, delay));
+                }
+                else
+                {
+                    ExecuteEvent(abstractWorldEvent: worldEvent, eData: eData);
+                }
             }
             else
             {
@@ -71,5 +82,18 @@ public class WorldEventsPatcher
         }
         // Otherwise proceed
         return true;
+    }
+
+    private static IEnumerator ExecuteEventCoroutine(AbstractWorldEvent abstractWorldEvent, WardenObjectiveEventData eData, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        ExecuteEvent(abstractWorldEvent: abstractWorldEvent, eData: eData);
+    }
+
+    private static void ExecuteEvent(AbstractWorldEvent abstractWorldEvent, WardenObjectiveEventData eData)
+    {
+        abstractWorldEvent.OnEventTrigger(eventData: ref eData);
+        WardenObjectiveManager.DisplayWardenIntel(eData.Layer, eData.WardenIntel);
     }
 }

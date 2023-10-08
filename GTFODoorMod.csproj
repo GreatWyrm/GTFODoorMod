@@ -38,5 +38,8 @@
     <Reference Include="Utils-ASM">
       <HintPath>/deps/Utils-ASM.dll</HintPath>
     </Reference>
+    <Reference Include="GTFO-API">
+      <HintPath>/deps/GTFO-API.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
