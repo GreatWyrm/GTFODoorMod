@@ -41,5 +41,15 @@
     <Reference Include="GTFO-API">
       <HintPath>/deps/GTFO-API.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/deps/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>/deps/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="resources\red-x.png" />
+    <EmbeddedResource Include="resources\red-x.png" />
   </ItemGroup>
 </Project>

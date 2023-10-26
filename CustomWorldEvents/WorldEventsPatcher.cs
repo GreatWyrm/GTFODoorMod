@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using BepInEx.Logging;
 using GameData;
@@ -15,22 +14,32 @@ public class WorldEventsPatcher
     private Dictionary<string, object> _enumMapping = new();
     private static readonly ManualLogSource EventsLogger = new("giginss-doormod-events-patcher");
 
+    private static Texture2D RedXTexture;
+    public static readonly List<string> DoorSpriteRenderers = new List<string>() {"DoorFrame", "Door_Blade_1", "Door_Blade_2", "Door_Blade_3", "Door_Blade_4", "Door_Blade_5", "Door_Blade_6", "Door_Blade_7", "Door_Blade_Broken", "DoorEnterArrow_1", "DoorEnterArrow_2", "DoorEnterArrow_3", "DoorExitArrow"};
+    public static string SpriteName
+    {
+        get { return "DoorRedX";  }
+    }
     private static readonly int eWardenObjectiveEventTypeOffset = 50;
     private int currentCount = 0;
 
-    public WorldEventsPatcher(Harmony harmony)
+    public WorldEventsPatcher(Harmony harmony, Texture2D redX)
     {
         BepInEx.Logging.Logger.Sources.Add(EventsLogger);
+
+        RedXTexture = redX;
         
         EventsLogger.LogDebug("Creating door events");        
         LockAllDoorsInZone lockDoorsEvent = new();
         UnlockAllDoorsInZone unlockDoorsEvent = new();
         OpenAllWeakDoorsInZone openAllDoorsEvent = new();
+        CloseAllWeakDoorsInZone closeAllDoorsEvent = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
         AddToCustomWorldEvents(unlockDoorsEvent);
         AddToCustomWorldEvents(openAllDoorsEvent);
+        AddToCustomWorldEvents(closeAllDoorsEvent);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
@@ -84,7 +93,12 @@ public class WorldEventsPatcher
         return true;
     }
 
-    private static IEnumerator ExecuteEventCoroutine(AbstractWorldEvent abstractWorldEvent, WardenObjectiveEventData eData, float delay)
+    public static Texture2D GetRedXTexture()
+    {
+        return RedXTexture;
+    }
+
+    private static System.Collections.IEnumerator ExecuteEventCoroutine(AbstractWorldEvent abstractWorldEvent, WardenObjectiveEventData eData, float delay)
     {
         yield return new WaitForSeconds(delay);
         

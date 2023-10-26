@@ -3,9 +3,9 @@ using LevelGeneration;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
-public class OpenAllWeakDoorsInZone : AbstractWorldEvent
+public class CloseAllWeakDoorsInZone : AbstractWorldEvent
 {
-    public override System.String Identifier => "OpenAllWeakDoorsInZone";
+    public override System.String Identifier => "CloseAllWeakDoorsInZone";
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eData)
     {
@@ -14,7 +14,7 @@ public class OpenAllWeakDoorsInZone : AbstractWorldEvent
             var weakDoors = GetAllWeakDoorsInZone(targetZone);
             foreach (var weakDoor in weakDoors)
             {
-                weakDoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.Open);
+                weakDoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.Close);
             }
         }
         else
