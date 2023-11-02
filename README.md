@@ -1,6 +1,6 @@
 # GTFODoorMod
 
-A GTFO mod for a personal rundown I am working on. Currently, adds 3 new WardenObjectiveEvents, LockAllDoorsInZone, UnlockAllDoorsInZone, and OpenAllWeakDoorsInZone.
+A GTFO mod for a personal rundown I am working on. Currently, adds 4 new WardenObjectiveEvents, LockAllDoorsInZone, UnlockAllDoorsInZone, OpenAllWeakDoorsInZone, and CloseAllWeakDoorsInZone.
 
 ## Usage
 
