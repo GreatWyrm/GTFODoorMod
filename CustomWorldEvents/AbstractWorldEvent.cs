@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BepInEx.Logging;
 using GameData;
 using LevelGeneration;
@@ -29,9 +30,11 @@ public abstract class AbstractWorldEvent
         return true;
     }
 
-    protected static HashSet<LG_WeakDoor> GetAllWeakDoorsInZone(LG_Zone zone)
+    protected static LG_WeakDoor[] GetAllWeakDoorsInZone(LG_Zone zone)
     {
-        HashSet<LG_WeakDoor> set = new();
+        // For some reason, if I use a HashSet, weakdoors will still get duplicated
+        // Sort by map id
+        Dictionary<uint, LG_WeakDoor> table = new();
         foreach (var courseNode in zone.m_courseNodes)
         {
             foreach (var coursePortal in courseNode.m_portals)
@@ -41,11 +44,10 @@ public abstract class AbstractWorldEvent
                 var weakDoor = coursePortal.m_door.TryCast<LG_WeakDoor>();
                 if (weakDoor != null)
                 {
-                    set.Add(weakDoor);
+                    table.TryAdd(weakDoor.MapperDataID, weakDoor);
                 }
             }
         }
-
-        return set;
+        return table.Values.ToArray();
     }
 }

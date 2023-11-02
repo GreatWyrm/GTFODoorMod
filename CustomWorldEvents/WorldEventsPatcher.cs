@@ -28,6 +28,9 @@ public class WorldEventsPatcher
         BepInEx.Logging.Logger.Sources.Add(EventsLogger);
 
         RedXTexture = redX;
+        // Prevent the texture from unloading if we run a level more than once per session
+        UnityEngine.Object.DontDestroyOnLoad(RedXTexture);
+        RedXTexture.hideFlags = HideFlags.HideAndDontSave | HideFlags.DontUnloadUnusedAsset;
         
         EventsLogger.LogDebug("Creating door events");        
         LockAllDoorsInZone lockDoorsEvent = new();

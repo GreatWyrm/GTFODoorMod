@@ -18,20 +18,22 @@ public class LockAllDoorsInZone : AbstractWorldEvent
             foreach (var weakDoor in weakDoors)
             {
                 DoorLockTracker.LockDoor(weakDoor.MapperDataID);
-                
                 foreach (var doorButton in weakDoor.m_buttons)
                 {
                     foreach (var sprite in doorButton.gameObject.GetComponentsInChildren<SpriteRenderer>()) 
                     {
+                        eventLogger.LogInfo($"Found {sprite.name} SpriteRenderer.");
                         if (sprite.name.Equals("DoorFrame"))
                         {
                             SpriteRenderer clone = GameObject.Instantiate(sprite, sprite.transform.parent.gameObject.transform);
                             clone.name = WorldEventsPatcher.SpriteName;
                             clone.sprite = newSprite;
+                            clone.enabled = true;
                         }
                         if (WorldEventsPatcher.DoorSpriteRenderers.Contains(sprite.name))
                         {
-                            sprite.enabled = false;
+                            sprite.forceRenderingOff = true;
+                            eventLogger.LogInfo($"Successfully disabled {sprite.name}, Force Rendering Off: {sprite.forceRenderingOff}");
                         }
                     }
                 }
