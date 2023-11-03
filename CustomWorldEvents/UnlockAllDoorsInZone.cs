@@ -26,7 +26,7 @@ public class UnlockAllDoorsInZone : AbstractWorldEvent
                         }
                         if (WorldEventsPatcher.DoorSpriteRenderers.Contains(sprite.name))
                         {
-                            sprite.enabled = true;
+                            sprite.forceRenderingOff = false;
                         }
                     }
                 }

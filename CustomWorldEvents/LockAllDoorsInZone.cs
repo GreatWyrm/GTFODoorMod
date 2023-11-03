@@ -22,7 +22,6 @@ public class LockAllDoorsInZone : AbstractWorldEvent
                 {
                     foreach (var sprite in doorButton.gameObject.GetComponentsInChildren<SpriteRenderer>()) 
                     {
-                        eventLogger.LogInfo($"Found {sprite.name} SpriteRenderer.");
                         if (sprite.name.Equals("DoorFrame"))
                         {
                             SpriteRenderer clone = GameObject.Instantiate(sprite, sprite.transform.parent.gameObject.transform);
@@ -32,8 +31,9 @@ public class LockAllDoorsInZone : AbstractWorldEvent
                         }
                         if (WorldEventsPatcher.DoorSpriteRenderers.Contains(sprite.name))
                         {
+                            sprite.enabled = false;
                             sprite.forceRenderingOff = true;
-                            eventLogger.LogInfo($"Successfully disabled {sprite.name}, Force Rendering Off: {sprite.forceRenderingOff}");
+                            //eventLogger.LogInfo($"Successfully disabled {sprite.name}, Force Rendering Off: {sprite.forceRenderingOff}");
                         }
                     }
                 }
