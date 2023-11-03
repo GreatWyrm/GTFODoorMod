@@ -18,15 +18,15 @@ public class UnlockAllDoorsInZone : AbstractWorldEvent
                 DoorLockTracker.UnlockDoor(weakDoor.MapperDataID);
                 foreach (var doorButton in weakDoor.m_buttons)
                 {
-                    foreach (var sprite in doorButton.gameObject.GetComponentsInChildren<SpriteRenderer>()) 
+                    foreach (var sprite in doorButton.gameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) 
                     {
                         if (sprite.name.Equals(WorldEventsPatcher.SpriteName))
                         {
-                            GameObject.Destroy(sprite);
+                            GameObject.Destroy(sprite.gameObject);
                         }
                         if (WorldEventsPatcher.DoorSpriteRenderers.Contains(sprite.name))
                         {
-                            sprite.forceRenderingOff = false;
+                            sprite.gameObject.SetActive(true);
                         }
                     }
                 }

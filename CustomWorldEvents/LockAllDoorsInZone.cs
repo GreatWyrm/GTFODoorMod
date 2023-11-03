@@ -31,9 +31,7 @@ public class LockAllDoorsInZone : AbstractWorldEvent
                         }
                         if (WorldEventsPatcher.DoorSpriteRenderers.Contains(sprite.name))
                         {
-                            sprite.enabled = false;
-                            sprite.forceRenderingOff = true;
-                            //eventLogger.LogInfo($"Successfully disabled {sprite.name}, Force Rendering Off: {sprite.forceRenderingOff}");
+                            sprite.gameObject.SetActive(false);
                         }
                     }
                 }
