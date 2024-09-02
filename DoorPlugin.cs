@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace GTFODoorMod;
 
-[BepInPlugin("com.giginss.doormod", "Giginss's Door Mod", "0.0.2")]
+[BepInPlugin("com.giginss.doormod", "Giginss's Door Mod", "0.0.3")]
 public class DoorPlugin : BasePlugin
 {
     
@@ -39,5 +39,6 @@ public class DoorPlugin : BasePlugin
         var harmony = new Harmony("com.giginss.doormod");
         WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher(harmony, redXTexture);
         DoorPatcher doorPatcher = new DoorPatcher(harmony);
+        PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);  
     }
 }

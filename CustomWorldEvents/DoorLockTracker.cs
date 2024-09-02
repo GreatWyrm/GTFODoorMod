@@ -20,4 +20,8 @@ public class DoorLockTracker
     {
         LockedDoors.Remove(doorId);
     }
+
+    public static void ClearLockedDoors() {
+        LockedDoors.Clear();
+    }
 }

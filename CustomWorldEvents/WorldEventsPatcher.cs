@@ -55,6 +55,9 @@ public class WorldEventsPatcher
 
         var originalExecuteEvent = typeof(WorldEventManager).GetMethod(nameof(WorldEventManager.ExecuteEvent));
         harmony.Patch(originalExecuteEvent, prefix: new HarmonyMethod(typeof(WorldEventsPatcher), nameof(ExecuteEventPrefix)));
+
+        var originalCleanupEvent = typeof(GS_AfterLevel).GetMethod(nameof(GS_AfterLevel.CleanupAfterExpedition));
+        harmony.Patch(originalCleanupEvent, postfix: new HarmonyMethod(typeof(WorldEventsPatcher), nameof(CleanupLevelPostfix)));
         EventsLogger.LogDebug("Patching successful!");
     }
 
@@ -94,6 +97,11 @@ public class WorldEventsPatcher
         }
         // Otherwise proceed
         return true;
+    }
+
+    [HarmonyPostfix]
+    static void CleanupLevelPostfix() {
+        DoorLockTracker.ClearLockedDoors();
     }
 
     public static Texture2D GetRedXTexture()
