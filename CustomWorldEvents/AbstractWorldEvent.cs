@@ -20,7 +20,7 @@ public abstract class AbstractWorldEvent
 
     public abstract void OnEventTrigger(ref WardenObjectiveEventData eventData);
     
-    protected static bool TryGetZone(WardenObjectiveEventData eventData, out LG_Zone zone)
+    protected bool TryGetZone(WardenObjectiveEventData eventData, out LG_Zone zone)
     {
         if (!Builder.Current.m_currentFloor.TryGetZoneByLocalIndex(eventData.DimensionIndex, eventData.Layer, eventData.LocalIndex, out zone))
         {
@@ -30,7 +30,7 @@ public abstract class AbstractWorldEvent
         return true;
     }
 
-    protected static LG_WeakDoor[] GetAllWeakDoorsInZone(LG_Zone zone)
+    protected LG_WeakDoor[] GetAllWeakDoorsInZone(LG_Zone zone)
     {
         // For some reason, if I use a HashSet, weakdoors will still get duplicated
         // Sort by map id

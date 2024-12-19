@@ -30,6 +30,9 @@
     <Reference Include="GlobalFramework-ASM">
       <HintPath>/deps/GlobalFramework-ASM.dll</HintPath>
     </Reference>
+    <Reference Include="SNet_ASM">
+      <HintPath>/deps/SNet_ASM.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>/deps/UnityEngine.dll</HintPath>
     </Reference>

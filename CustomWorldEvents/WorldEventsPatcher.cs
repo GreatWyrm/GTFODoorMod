@@ -37,12 +37,14 @@ public class WorldEventsPatcher
         UnlockAllDoorsInZone unlockDoorsEvent = new();
         OpenAllWeakDoorsInZone openAllDoorsEvent = new();
         CloseAllWeakDoorsInZone closeAllDoorsEvent = new();
+        ReplaceZoneDoorAlarm replaceZoneDoorAlarm = new(); 
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
         AddToCustomWorldEvents(unlockDoorsEvent);
         AddToCustomWorldEvents(openAllDoorsEvent);
         AddToCustomWorldEvents(closeAllDoorsEvent);
+        AddToCustomWorldEvents(replaceZoneDoorAlarm);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)

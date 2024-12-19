@@ -1,5 +1,6 @@
 using GameData;
 using LevelGeneration;
+using SNetwork;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -9,17 +10,20 @@ public class OpenAllWeakDoorsInZone : AbstractWorldEvent
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eData)
     {
-        if (TryGetZone(eData, out LG_Zone targetZone))
+        if (SNet.IsMaster)
         {
-            var weakDoors = GetAllWeakDoorsInZone(targetZone);
-            foreach (var weakDoor in weakDoors)
+            if (TryGetZone(eData, out LG_Zone targetZone))
             {
-                weakDoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.Open);
+                var weakDoors = GetAllWeakDoorsInZone(targetZone);
+                foreach (var weakDoor in weakDoors)
+                {
+                    weakDoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.Open);
+                }
             }
-        }
-        else
-        {
-            eventLogger.LogError($"{Identifier} event failed to get target zone!");
+            else
+            {
+                eventLogger.LogError($"{Identifier} event failed to get target zone!");
+            }
         }
     }
 }

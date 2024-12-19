@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using BepInEx.Logging;
-using GameData;
-using GTFO.API.Utilities;
 using HarmonyLib;
 
 namespace GTFODoorMod;
