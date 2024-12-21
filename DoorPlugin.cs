@@ -41,7 +41,7 @@ public class DoorPlugin : BasePlugin
         WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher(harmony, redXTexture);
         DoorPatcher doorPatcher = new DoorPatcher(harmony);
         PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);
-        var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey));
+        var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
     }
 }

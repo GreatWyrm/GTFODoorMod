@@ -10,7 +10,6 @@ public class ReplaceZoneDoorAlarm : AbstractWorldEvent
     public override void OnEventTrigger(ref WardenObjectiveEventData eData)
     {
         TryGetZone(eData, out LG_Zone zone);
-
         var securityDoor = zone.m_sourceGate.SpawnedDoor.TryCast<LG_SecurityDoor>();
         if (securityDoor != null)
         {
@@ -32,7 +31,7 @@ public class ReplaceZoneDoorAlarm : AbstractWorldEvent
                 case eDoorStatus.Closed_LockedWithChainedPuzzle_Alarm:
                 case eDoorStatus.Closed_LockedWithPowerGenerator:
                 case eDoorStatus.Closed_LockedWithNoKey:
-                case eDoorStatus.Closed_LockedWithBulkheadDC:    
+                case eDoorStatus.Closed_LockedWithBulkheadDC:
                     securityDoor.SetupChainedPuzzleLock(eData.ChainPuzzle);
                     break;
                 // Invalid States
