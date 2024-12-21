@@ -4,6 +4,7 @@ using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using GTFODoorMod.CustomWorldEvents;
 using HarmonyLib;
+using SNetwork;
 using UnityEngine;
 
 namespace GTFODoorMod;
@@ -39,6 +40,8 @@ public class DoorPlugin : BasePlugin
         var harmony = new Harmony("com.giginss.doormod");
         WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher(harmony, redXTexture);
         DoorPatcher doorPatcher = new DoorPatcher(harmony);
-        PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);  
+        PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);
+        var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey));
+        harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
     }
 }

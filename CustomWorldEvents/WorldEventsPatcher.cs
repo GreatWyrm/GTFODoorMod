@@ -80,6 +80,11 @@ public class WorldEventsPatcher
             if (_customWorldEvents.TryGetValue((int)eData.Type, out AbstractWorldEvent worldEvent))
             {
                 EventsLogger.LogDebug($"Triggering {worldEvent.Identifier}");
+                bool allowed = worldEvent.CheckWorldEventCondition(eData);
+                if (!allowed)
+                {
+                    return false;
+                }
                 float delay = eData.Delay;
                 if (delay > 0)
                 {

@@ -11,9 +11,10 @@ public class ReplaceZoneDoorAlarm : AbstractWorldEvent
     {
         TryGetZone(eData, out LG_Zone zone);
 
-        var securityDoor = zone.m_sourceGate.TryCast<LG_SecurityDoor>();
+        var securityDoor = zone.m_sourceGate.SpawnedDoor.TryCast<LG_SecurityDoor>();
         if (securityDoor != null)
         {
+            ReplicationPatch.OverrideCount++;
             switch (securityDoor.LastStatus)
             {
                 // Unsafe states
@@ -45,6 +46,7 @@ public class ReplaceZoneDoorAlarm : AbstractWorldEvent
                     break;
                     
             }
+            ReplicationPatch.OverrideCount--;
         }
         else
         {

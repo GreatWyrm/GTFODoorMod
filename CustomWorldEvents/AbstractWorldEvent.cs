@@ -29,6 +29,22 @@ public abstract class AbstractWorldEvent
         }
         return true;
     }
+    
+    public bool CheckWorldEventCondition(WardenObjectiveEventData eventData)
+    {
+        int conditionIndex = eventData.Condition.ConditionIndex;
+        if (conditionIndex == -1)
+        {
+            // No condition set, return true
+            return true;
+        }
+        else
+        {
+            bool match = eventData.Condition.IsTrue;
+            bool currentState = WorldEventManager.GetCondition(conditionIndex);
+            return match == currentState;
+        }
+    }
 
     protected LG_WeakDoor[] GetAllWeakDoorsInZone(LG_Zone zone)
     {
