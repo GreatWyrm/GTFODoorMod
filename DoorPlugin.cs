@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace GTFODoorMod;
 
-[BepInPlugin("com.giginss.doormod", "Giginss's Door Mod", "0.0.3")]
+[BepInPlugin("com.giginss.rundownmod", "Giginss's Rundown Mod", "0.0.4")]
 public class DoorPlugin : BasePlugin
 {
     
     public override void Load()
     {
         // Plugin startup logic
-        Log.LogInfo("Plugin Giginss's Door Mod is loading!");
+        Log.LogInfo("Plugin Giginss's Rundown Mod is loading!");
         Log.LogInfo("Hello Complex!");
         
         // Load in image
@@ -37,10 +37,11 @@ public class DoorPlugin : BasePlugin
             }
         }
 
-        var harmony = new Harmony("com.giginss.doormod");
+        var harmony = new Harmony("com.giginss.rundownmod");
         WorldEventsPatcher customEventsPatcher = new WorldEventsPatcher(harmony, redXTexture);
         DoorPatcher doorPatcher = new DoorPatcher(harmony);
         PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);
+        AllowNegativeInfectionFogPatch fogPatch = new AllowNegativeInfectionFogPatch(harmony, Log);
         var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
     }
