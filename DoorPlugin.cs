@@ -42,6 +42,7 @@ public class DoorPlugin : BasePlugin
         DoorPatcher doorPatcher = new DoorPatcher(harmony);
         PabloHeavyHitreactPatch pabloPatcher = new PabloHeavyHitreactPatch(harmony, Log);
         AllowNegativeInfectionFogPatch fogPatch = new AllowNegativeInfectionFogPatch(harmony, Log);
+        FixWardenObjectiveManager fixWardenObjectiveManager = new FixWardenObjectiveManager(harmony, Log);
         var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
     }
