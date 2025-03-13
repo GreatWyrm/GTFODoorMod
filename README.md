@@ -1,6 +1,6 @@
 # GTFODoorMod
 
-A GTFO mod for a personal rundown I am working on. Currently, adds 5 new WardenObjectiveEvents, described in the table below.
+A GTFO mod for a personal rundown I am working on. Currently, adds 6 new WardenObjectiveEvents, described in the table below.
 
 ## Usage
 
@@ -15,7 +15,8 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | UnlockAllDoorsInZone                | 51        | LocalIndex - The target zone to unlock all doors in                                                     |
 | OpenAllWeakDoorsInZone              | 52        | LocalIndex - The target zone to open all doors in                                                       |
 | CloseAllWeakDoorsInZone             | 53        | LocalIndex - The target zone to close all doors in                                                      |
-| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use | 
+| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use |
+| ForgetLastKnowMainDimensionPos      | 55        | None                                                                                                    |
 
 The Type field should be filled in with the number in the Id column.
 
