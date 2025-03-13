@@ -9,14 +9,14 @@ It does make one alteration to the base game to have Pablo (the immortal) stagge
 
 To use the new events, add a new WardenObjectiveEvent with the types and parameters described below:
 
-| Event                               | Id (Type) | Parameters Used                                                                                         |
-|-------------------------------------|-----------|---------------------------------------------------------------------------------------------------------|
-| LockAllDoorsInZone                  | 50        | LocalIndex - The target zone to lock all doors in                                                       |
-| UnlockAllDoorsInZone                | 51        | LocalIndex - The target zone to unlock all doors in                                                     |
-| OpenAllWeakDoorsInZone              | 52        | LocalIndex - The target zone to open all doors in                                                       |
-| CloseAllWeakDoorsInZone             | 53        | LocalIndex - The target zone to close all doors in                                                      |
-| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use |
-| ForgetLastKnowMainDimensionPos      | 55        | None                                                                                                    |
+| Event                               | Id (Type) | Parameters Used                                                                                            |
+|-------------------------------------|-----------|------------------------------------------------------------------------------------------------------------|
+| LockAllDoorsInZone                  | 50        | LocalIndex - The target zone to lock all doors in                                                          |
+| UnlockAllDoorsInZone                | 51        | LocalIndex - The target zone to unlock all doors in                                                        |
+| OpenAllWeakDoorsInZone              | 52        | LocalIndex - The target zone to open all doors in                                                          |
+| CloseAllWeakDoorsInZone             | 53        | LocalIndex - The target zone to close all doors in                                                         |
+| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use    |
+| ChangeLastKnownMainDimPosition      | 55        | Enabled: if true, picks a random position in the specified LocalIndex. False, resets to elevator position. |
 
 The Type field should be filled in with the number in the Id column.
 
