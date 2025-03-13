@@ -38,7 +38,7 @@ public class WorldEventsPatcher
         OpenAllWeakDoorsInZone openAllDoorsEvent = new();
         CloseAllWeakDoorsInZone closeAllDoorsEvent = new();
         ReplaceZoneDoorAlarm replaceZoneDoorAlarm = new(); 
-        ForgetLastKnownMainDimPosition forgetLastKnownMainDimPosition = new();
+        ChangeLastKnownMainDimPosition changeLastKnownMainDimPosition = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -46,7 +46,7 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(openAllDoorsEvent);
         AddToCustomWorldEvents(closeAllDoorsEvent);
         AddToCustomWorldEvents(replaceZoneDoorAlarm);
-        AddToCustomWorldEvents(forgetLastKnownMainDimPosition);
+        AddToCustomWorldEvents(changeLastKnownMainDimPosition);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
