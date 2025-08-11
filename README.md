@@ -1,6 +1,6 @@
 # GTFODoorMod
 
-A GTFO mod for a personal rundown I am working on. Currently, adds 6 new WardenObjectiveEvents, described in the table below.
+A GTFO mod for a personal rundown I am working on. Currently, adds 7 new WardenObjectiveEvents, described in the table below.
 
 ## Usage
 
@@ -9,16 +9,19 @@ It does make one alteration to the base game to have Pablo (the immortal) stagge
 
 To use the new events, add a new WardenObjectiveEvent with the types and parameters described below:
 
-| Event                               | Id (Type) | Parameters Used                                                                                            |
-|-------------------------------------|-----------|------------------------------------------------------------------------------------------------------------|
-| LockAllDoorsInZone                  | 50        | LocalIndex - The target zone to lock all doors in                                                          |
-| UnlockAllDoorsInZone                | 51        | LocalIndex - The target zone to unlock all doors in                                                        |
-| OpenAllWeakDoorsInZone              | 52        | LocalIndex - The target zone to open all doors in                                                          |
-| CloseAllWeakDoorsInZone             | 53        | LocalIndex - The target zone to close all doors in                                                         |
-| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use    |
-| ChangeLastKnownMainDimPosition      | 55        | Enabled: if true, picks a random position in the specified LocalIndex. False, resets to elevator position. |
+| Event                               | Id (Type) | Parameters Used                                                                                             |
+|-------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------|
+| LockAllDoorsInZone                  | 50        | LocalIndex - The target zone to lock all doors in                                                           |
+| UnlockAllDoorsInZone                | 51        | LocalIndex - The target zone to unlock all doors in                                                         |
+| OpenAllWeakDoorsInZone              | 52        | LocalIndex - The target zone to open all doors in                                                           |
+| CloseAllWeakDoorsInZone             | 53        | LocalIndex - The target zone to close all doors in                                                          |
+| ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use     |
+| ChangeLastKnownMainDimPosition      | 55        | Enabled - if true, picks a random position in the specified LocalIndex. False, resets to elevator position. |
+| TeleportResourcePack                | 56        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
 
 The Type field should be filled in with the number in the Id column.
+
+TeleportResourcePack event will only work when the source player has a resource pack to teleport.
 
 ## Compiling
 
