@@ -1,6 +1,6 @@
 # GTFODoorMod
 
-A GTFO mod for a personal rundown I am working on. Currently, adds 7 new WardenObjectiveEvents, described in the table below.
+A GTFO mod for a personal rundown I am working on. Currently, adds 8 new WardenObjectiveEvents, described in the table below.
 
 ## Usage
 
@@ -18,6 +18,7 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | ReplaceZoneDoorAlarm (Experimental) | 54        | LocalIndex - The target zone (retrieves the security door), ChainPuzzle - The new chained puzzle to use     |
 | ChangeLastKnownMainDimPosition      | 55        | Enabled - if true, picks a random position in the specified LocalIndex. False, resets to elevator position. |
 | TeleportResourcePack                | 56        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
+| TeleportPocketItems                 | 57        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
 
 The Type field should be filled in with the number in the Id column.
 
