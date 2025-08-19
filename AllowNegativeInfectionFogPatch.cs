@@ -38,8 +38,7 @@ public class AllowNegativeInfectionFogPatch
             }
         }
     }
-
-    // TODO: Confirm this works
+    
     static void AllowBlendNegativeInfectionPlane(LocalPlayerAgentSettings __instance, float amount)
     {
         float currentInfection = LocalPlayerAgentSettings.Current.currentInfection;
