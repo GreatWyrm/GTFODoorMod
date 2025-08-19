@@ -12,7 +12,7 @@ public class FixProgressionPuzzleNotUsingDimensionIndexPatch
     public FixProgressionPuzzleNotUsingDimensionIndexPatch(Harmony harmony, ManualLogSource loggerParent) {
         logger = loggerParent;
         harmony.Patch(typeof(LG_Distribute_ProgressionPuzzles).GetMethod(nameof(LG_Distribute_ProgressionPuzzles.CreateKeyItemDistribution)), prefix: new HarmonyMethod(typeof(FixProgressionPuzzleNotUsingDimensionIndexPatch), nameof(TestPrefix)));
-        logger.LogInfo("Patched infection plane functions!");
+        logger.LogInfo("Patched progression puzzle distribution function!");
     }
 
     
