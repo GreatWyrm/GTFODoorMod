@@ -11,12 +11,12 @@ public class FixProgressionPuzzleNotUsingDimensionIndexPatch
 
     public FixProgressionPuzzleNotUsingDimensionIndexPatch(Harmony harmony, ManualLogSource loggerParent) {
         logger = loggerParent;
-        harmony.Patch(typeof(LG_Distribute_ProgressionPuzzles).GetMethod(nameof(LG_Distribute_ProgressionPuzzles.CreateKeyItemDistribution)), prefix: new HarmonyMethod(typeof(FixProgressionPuzzleNotUsingDimensionIndexPatch), nameof(TestPrefix)));
+        harmony.Patch(typeof(LG_Distribute_ProgressionPuzzles).GetMethod(nameof(LG_Distribute_ProgressionPuzzles.CreateKeyItemDistribution)), prefix: new HarmonyMethod(typeof(FixProgressionPuzzleNotUsingDimensionIndexPatch), nameof(OverrideLayerIfNeededPrefix)));
         logger.LogInfo("Patched progression puzzle distribution function!");
     }
 
     
-    static bool TestPrefix(LG_Distribute_ProgressionPuzzles __instance, GateKeyItem keyItem, ZonePlacementData placementData)
+    static bool OverrideLayerIfNeededPrefix(LG_Distribute_ProgressionPuzzles __instance, GateKeyItem keyItem, ZonePlacementData placementData)
     {
         if (__instance.m_layer.m_dimension.DimensionIndex != placementData.DimensionIndex)
         {
