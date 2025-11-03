@@ -45,6 +45,7 @@ public class DoorPlugin : BasePlugin
         FixWardenObjectiveManager fixWardenObjectiveManager = new FixWardenObjectiveManager(harmony, Log);
         OnlyBreakLocksPatch onlyBreakLocksPatch = new OnlyBreakLocksPatch(harmony, Log);
         FixProgressionPuzzleNotUsingDimensionIndexPatch dimensionIndexPatch = new FixProgressionPuzzleNotUsingDimensionIndexPatch(harmony, Log);
+        FixDimensionInfectionPlane fixDimensionInfectionPlane = new FixDimensionInfectionPlane(harmony, Log);
         var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
     }
