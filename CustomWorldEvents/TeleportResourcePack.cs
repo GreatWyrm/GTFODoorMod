@@ -40,6 +40,22 @@ public class TeleportResourcePack : AbstractWorldEvent
         var gotDestResourcePack = destinationBackpack.TryGetBackpackItem(InventorySlot.ResourcePack,
             out var destinationResourcePackItem);
 
+        if (gotSourceResourcePack)
+        {
+            var custom = new pItemData_Custom();
+            custom.ammo = sourceBackpack.AmmoStorage.ResourcePackAmmo.AmmoInPack;
+            eventLogger.LogInfo($"Set source custom.ammo to {custom.ammo}.");
+            sourceResourcePackItem.Instance.SetCustomData(custom, false);
+        }
+
+        if (gotDestResourcePack)
+        {
+            var custom = new pItemData_Custom();
+            custom.ammo = destinationBackpack.AmmoStorage.ResourcePackAmmo.AmmoInPack;
+            eventLogger.LogInfo($"Set destination custom.ammo to {custom.ammo}.");
+            destinationResourcePackItem.Instance.SetCustomData(custom, false);
+        }
+
         if (gotDestResourcePack && gotSourceResourcePack)
         {
             // Both source and destination are holding an item, swap
