@@ -1,6 +1,5 @@
 using GameData;
 using Player;
-using SNetwork;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -13,14 +12,14 @@ public class TeleportPocketItems : AbstractWorldEvent
         int source = eventData.Count;
         int destination = (int)eventData.EnemyID;
 
-        bool gotSourceAgent = PlayerManager.TryGetPlayerAgent(ref source, out var sourceAgent);
-        bool gotDestAgent = PlayerManager.TryGetPlayerAgent(ref destination, out var destinationAgent);
-        if (!gotSourceAgent || !gotDestAgent)
+        var playersInLevel = PlayerManager.PlayerAgentsInLevel;
+        if (source >= playersInLevel.Count || destination >= playersInLevel.Count)
         {
-            eventLogger.LogWarning(
-                $"Failed to get source and/or destination agent for indices {source} and {destination}!");
+            eventLogger.LogWarning($"Either {source} or {destination} are out of range when trying to teleport pocket items. Number of player agents is {playersInLevel.Count}.");
             return;
         }
+        var sourceAgent = playersInLevel[source];
+        var destinationAgent = playersInLevel[destination];
 
         bool gotSourceBackpack = PlayerBackpackManager.TryGetBackpack(sourceAgent.Owner, out var sourceBackpack);
         bool gotDestBackpack =
