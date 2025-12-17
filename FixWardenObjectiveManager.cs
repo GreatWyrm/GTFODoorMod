@@ -10,7 +10,7 @@ public class FixWardenObjectiveManager
     public FixWardenObjectiveManager(Harmony harmony, ManualLogSource loggerParent) {
         logger = loggerParent;
         harmony.Patch(typeof(WardenObjectiveManager).GetMethod(nameof(WardenObjectiveManager.OnLevelCleanup)), postfix: new HarmonyMethod(typeof(FixWardenObjectiveManager), nameof(OnLevelCleanupPostfix)));
-        logger.LogInfo("Patched infection plane functions!");
+        logger.LogInfo("Patched Level Cleanup function!");
     }
 
     // The value of m_exitEventsTriggered does not appear to be set to false at any point, so we need to manually fix it OnLevelCleanup
