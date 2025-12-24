@@ -39,9 +39,9 @@ public class InfiniteAmmoEasterEgg
                     var ammoStorage = backpack.AmmoStorage;
                     ammoStorage.StandardAmmo.AddAmmo(ammoStorage.StandardAmmo.AmmoMaxCap);
                     ammoStorage.SpecialAmmo.AddAmmo(ammoStorage.SpecialAmmo.AmmoMaxCap);
+                    logger.LogInfo($"Gave easter egg ammo.");
                 }
             }
-            logger.LogInfo($"Gave easter egg ammo.");
         }
     }
 }
