@@ -57,7 +57,7 @@ public class DoorPlugin : BasePlugin
         FixWardenObjectiveManager fixWardenObjectiveManager = new FixWardenObjectiveManager(harmony, Log);
         OnlyBreakLocksPatch onlyBreakLocksPatch = new OnlyBreakLocksPatch(harmony, Log);
         FixProgressionPuzzleNotUsingDimensionIndexPatch dimensionIndexPatch = new FixProgressionPuzzleNotUsingDimensionIndexPatch(harmony, Log);
-        FixDimensionInfectionPlane fixDimensionInfectionPlane = new FixDimensionInfectionPlane(harmony, Log);
+        FixBaseGameBugs fixBaseGameBugs = new FixBaseGameBugs(harmony, Log);
         if (psychoBuff.Value)
         {
             InfiniteAmmoEasterEgg infiniteAmmoEasterEgg = new InfiniteAmmoEasterEgg(harmony, Log);
