@@ -29,7 +29,7 @@ public class InfiniteAmmoEasterEgg
             return;
         }
         uint needAmmoId = 1309;
-        if (textUID == needAmmoId && src.PlayerName.Equals("PsychoMadEye", StringComparison.OrdinalIgnoreCase))
+        if (textUID == needAmmoId && SteamManager.LocalPlayerName.Equals("PsychoMadEye", StringComparison.OrdinalIgnoreCase))
         {
             if (SNet.IsMaster)
             {
