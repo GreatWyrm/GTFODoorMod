@@ -8,7 +8,6 @@ namespace GTFODoorMod;
 public class FixBaseGameBugs
 {
     private static ManualLogSource logger;
-    private static float lastLogtime;
 
     public FixBaseGameBugs(Harmony harmony, ManualLogSource loggerParent) {
         logger = loggerParent;

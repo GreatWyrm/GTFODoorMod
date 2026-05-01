@@ -41,6 +41,7 @@ public class WorldEventsPatcher
         ChangeLastKnownMainDimPosition changeLastKnownMainDimPosition = new();
         TeleportResourcePack teleportResourcePack = new();
         TeleportPocketItems teleportPocketItems = new();
+        AddMovementSpeed addMovementSpeed = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -51,6 +52,7 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(changeLastKnownMainDimPosition);
         AddToCustomWorldEvents(teleportResourcePack);
         AddToCustomWorldEvents(teleportPocketItems);
+        AddToCustomWorldEvents(addMovementSpeed);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)

@@ -8,18 +8,19 @@ using GameData;
 using GTFO.API;
 using GTFODoorMod.CustomWorldEvents;
 using HarmonyLib;
-using Player;
 using SNetwork;
 using UnityEngine;
 
 namespace GTFODoorMod;
 
+[BepInDependency("Dinorush.ModifierAPI")]
 [BepInPlugin("com.giginss.rundownmod", "Giginss's Rundown Mod", "1.0.0")]
 public class DoorPlugin : BasePlugin
 {
  
     private ConfigEntry<bool> lurkerNerf;
     private ConfigEntry<bool> psychoBuff;
+    private ConfigEntry<bool> rajNerf;
     
     public override void Load()
     {
@@ -30,6 +31,8 @@ public class DoorPlugin : BasePlugin
         // Config Loading
         lurkerNerf = Config.Bind("Easter Egg", "LurkerNerf", true, "Easter Egg to prevent anyone named Lurker from picking a hammer");
         psychoBuff = Config.Bind("Easter Egg", "PsychoBuff", true, "Easter Egg to allow anyone named PsychoMadEye to gain enough ammo on D3.");
+        rajNerf = Config.Bind("Easter Egg", "RajNerf", true,
+            "Easter Egg to prevent anyone named Raj from picking a spear");
         
         // Load in image
         var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GTFODoorMod.resources.red-x.png");
@@ -65,8 +68,14 @@ public class DoorPlugin : BasePlugin
 
         if (lurkerNerf.Value)
         {
-            Log.LogInfo($"Lurker Nerf is enabled, adding function to OnManagersSetup.");
+            Log.LogInfo($"Lurker Nerf is enabled");
             EventAPI.OnManagersSetup += CheckAndDisableHammers;
+        }
+
+        if (rajNerf.Value)
+        {
+            Log.LogInfo($"Raj Nerf is enabled");
+            EventAPI.OnManagersSetup += CheckAndDisableSpears;
         }
         var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
@@ -81,6 +90,14 @@ public class DoorPlugin : BasePlugin
             PlayerOfflineGearDataBlock.GetBlock(27).internalEnabled = false;
             PlayerOfflineGearDataBlock.GetBlock(28).internalEnabled = false;
             PlayerOfflineGearDataBlock.GetBlock(57).internalEnabled = false;
+        }
+    }
+    private static void CheckAndDisableSpears() 
+    {
+        if (SteamManager.LocalPlayerName.Equals("RAJ", StringComparison.OrdinalIgnoreCase))
+        {
+            PlayerOfflineGearDataBlock.GetBlock(54).internalEnabled = false;
+            PlayerOfflineGearDataBlock.GetBlock(70).internalEnabled = false;
         }
     }
 }

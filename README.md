@@ -19,6 +19,7 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | ChangeLastKnownMainDimPosition      | 55        | Enabled - if true, picks a random position in the specified LocalIndex. False, resets to elevator position. |
 | TeleportResourcePack                | 56        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
 | TeleportPocketItems                 | 57        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
+ | AddMovementSpeed                   | 58        | Duration - The movement speed amount added th the player                                                    |
 
 The Type field should be filled in with the number in the Id column.
 

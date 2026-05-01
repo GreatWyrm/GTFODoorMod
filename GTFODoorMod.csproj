@@ -51,6 +51,9 @@
     <Reference Include="UnityEngine.ImageConversionModule">
       <HintPath>/deps/UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
+    <Reference Include= "ModifierAPI">
+      <HintPath>/deps/ModifierAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Remove="resources\red-x.png" />
