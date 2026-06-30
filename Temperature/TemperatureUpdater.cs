@@ -99,7 +99,7 @@ public class TemperatureUpdater : MonoBehaviour
                 displayCallback.Invoke(currentTemp, TEMP_DAMAGE_THRESHOLD_COLOR, "OVERHEATING");
             } else if (currentTemp >= TEMP_WARN_THRESHOLD)
             {
-                float healAmount = delta * TEMP_INFECTION_RATE * -1;
+                float healAmount = delta * TEMP_INFECTION_RATE * -1.5f;
                 PlayerAgent playerAgent = PlayerManager.GetLocalPlayerAgent();
                 playerAgent.Damage.ModifyInfection(new pInfection
                 {
@@ -111,7 +111,7 @@ public class TemperatureUpdater : MonoBehaviour
             }
             else
             {
-                float healAmount = delta * TEMP_INFECTION_RATE * -1;
+                float healAmount = delta * TEMP_INFECTION_RATE * -3f;
                 PlayerAgent playerAgent = PlayerManager.GetLocalPlayerAgent();
                 playerAgent.Damage.ModifyInfection(new pInfection
                 {

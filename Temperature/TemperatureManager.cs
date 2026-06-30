@@ -1,4 +1,5 @@
 using BepInEx.Logging;
+using CellMenu;
 using GTFO.API;
 using HarmonyLib;
 using SNetwork;
@@ -17,7 +18,7 @@ public class TemperatureManager
     {
         BepInEx.Logging.Logger.Sources.Add(Logger);
         Logger.LogInfo("Initializing Temperature Manager");
-        LevelAPI.OnLevelCleanup += CleanupObject;
+        LevelAPI.OnLevelCleanup += OnLevelCleanup;
         RegisterNetworkEvents();
         RegisterPatches(harmony);
         Logger.LogInfo("Temperature Manager initialized");
@@ -55,13 +56,15 @@ public class TemperatureManager
         IsTemperatureActive = false;
     }
 
-    public void CleanupObject()
+    public void OnLevelCleanup()
     {
         if (temperatureTracker != null)
         {
             GameObject.Destroy(temperatureTracker);
             temperatureTracker = null;
         }
+
+        IsTemperatureActive = false;
     }
 
     private void UpdateTemperatureDisplay(float currentTemp, Color textColor, string status)
@@ -105,5 +108,7 @@ public class TemperatureManager
         harmony.Patch(originalSetInfection, postfix: new HarmonyMethod(typeof(TemperaturePatches), nameof(TemperaturePatches.SetInfectionBarPostfix)));
         var originalUpdateInfection = typeof(PUI_LocalPlayerStatus).GetMethod(nameof(PUI_LocalPlayerStatus.UpdateInfection));
         harmony.Patch(originalUpdateInfection, postfix: new HarmonyMethod(typeof(TemperaturePatches), nameof(TemperaturePatches.UpdateInfectionPostfix)));
+        var originalUpdateInventory = typeof(CM_PageMap).GetMethod(nameof(CM_PageMap.UpdatePlayerInventory));
+        harmony.Patch(originalUpdateInventory, postfix: new HarmonyMethod(typeof(TemperaturePatches), nameof(TemperaturePatches.UpdatePlayerInventoryPostfix)));
     }
 }
