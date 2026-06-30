@@ -48,6 +48,7 @@ public class WorldEventsPatcher
         AddMovementSpeed addMovementSpeed = new();
         ActivateTemperature activateTemperature = new(TemperatureManager);
         DeactivateTemperature deactivateTemperature = new(TemperatureManager);
+        StartTemperatureCooling cooling = new(TemperatureManager);
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -61,6 +62,7 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(addMovementSpeed);
         AddToCustomWorldEvents(activateTemperature);
         AddToCustomWorldEvents(deactivateTemperature);
+        AddToCustomWorldEvents(cooling);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
