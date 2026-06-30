@@ -37,6 +37,14 @@ public class TemperatureManager
         IsTemperatureActive = true;
     }
 
+    public void AddTemporaryCooling(float duration, float coolingRate)
+    {
+        if (temperatureTracker != null)
+        {
+            temperatureTracker.GetComponent<TemperatureUpdater>().AddTemporaryCooling(duration, coolingRate);
+        }
+    }
+
     public void DeactivateTemperature()
     {
         if (temperatureTracker != null)

@@ -11,6 +11,9 @@ public class TemperatureUpdater : MonoBehaviour
     private float currentTemp;
     private bool currentlyTicking;
 
+    private float coolingRate;
+    private float coolingDuration;
+
     private readonly float TEMP_SYNC_TIMER = 10f;
     private float currentSyncTimer;
     private readonly float TEMP_INFECTION_RATE = 0.02f;
@@ -20,6 +23,8 @@ public class TemperatureUpdater : MonoBehaviour
     private readonly Color TEMP_WARN_THRESHOLD_COLOR = Color.yellow;
     private readonly float TEMP_DAMAGE_THRESHOLD = 40f;
     private readonly Color TEMP_DAMAGE_THRESHOLD_COLOR = Color.red;
+    private readonly float MINIMUM_TEMPERATURE = 0f;
+    private readonly float MAXIMUM_TEMPERATURE = 60f;
     
     // Callbacks
     private Action<float, Color, string> displayCallback;
@@ -47,14 +52,34 @@ public class TemperatureUpdater : MonoBehaviour
     {
         currentTemp = temp;
     }
+
+    public void AddTemporaryCooling(float duration, float rate)
+    {
+        this.coolingDuration = duration;
+        this.coolingRate = rate;
+    }
     
     private void Update()
     {
         if (currentlyTicking)
         {
             float delta = Time.deltaTime;
-            currentTemp += tempRate * delta;
-            currentSyncTimer += delta;
+            if (coolingDuration > 0f)
+            {
+                coolingDuration -= delta;
+                currentTemp -= coolingRate * delta;
+                if (coolingDuration <= 0f)
+                {
+                    coolingDuration = 0f;
+                }
+            }
+            else
+            {
+                currentTemp += tempRate * delta;
+                currentSyncTimer += delta;
+            }
+            currentTemp = Mathf.Clamp(currentTemp, MINIMUM_TEMPERATURE, MAXIMUM_TEMPERATURE);
+            
             if (currentSyncTimer >= TEMP_SYNC_TIMER)
             {
                 currentSyncTimer = 0f;
@@ -98,6 +123,4 @@ public class TemperatureUpdater : MonoBehaviour
             }
         }
     }
-    
-    
 }

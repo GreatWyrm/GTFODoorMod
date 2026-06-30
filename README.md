@@ -21,7 +21,8 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | TeleportPocketItems                 | 57        | Count - The source player index (0-3 for 4 player lobbies), EnemyID - the destination player index          |
 | AddMovementSpeed                    | 58        | Duration - The movement speed amount added th the player                                                    |
 | ActivateTemperature                 | 59        | Duration - The starting temperature, FogTransitionDuration - the increase rate                              |
-| DeactivateTemperature               | 60        | Nothing                                                                                                     |            
+| DeactivateTemperature               | 60        | Nothing                                                                                                     |
+| StartCooling                        | 61        | Duration - The cooling duration, FogTransitionDuration - the cooling rate                                   |
 The Type field should be filled in with the number in the Id column.
 
 TeleportResourcePack event will only work when the source player has a resource pack to teleport.
