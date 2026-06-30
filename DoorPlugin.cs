@@ -7,7 +7,9 @@ using BepInEx.Unity.IL2CPP;
 using GameData;
 using GTFO.API;
 using GTFODoorMod.CustomWorldEvents;
+using GTFODoorMod.Temperature;
 using HarmonyLib;
+using Il2CppInterop.Runtime.Injection;
 using SNetwork;
 using UnityEngine;
 
@@ -79,6 +81,9 @@ public class DoorPlugin : BasePlugin
         }
         var originalMethod = typeof(SNet_Replication).GetMethod(nameof(SNet_Replication.AllocateKey), types: new [] { typeof(SNet_ReplicatorType), typeof(ushort) });
         harmony.Patch(originalMethod, new HarmonyMethod(typeof(ReplicationPatch), nameof(ReplicationPatch.Prefix)));
+        
+        ClassInjector.RegisterTypeInIl2Cpp<TemperatureUpdater>();
+        Log.LogInfo("Giginss' Rundown Mod finished Loading");
     }
     
     private static void CheckAndDisableHammers() 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using BepInEx.Logging;
 using GameData;
 using GTFO.API.Utilities;
+using GTFODoorMod.Temperature;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class WorldEventsPatcher
 {
     private static Dictionary<int, AbstractWorldEvent> _customWorldEvents = new();
     private Dictionary<string, object> _enumMapping = new();
-    private static readonly ManualLogSource EventsLogger = new("giginss-doormod-events-patcher");
+    private static readonly ManualLogSource EventsLogger = new("giginss.rundownmod.events-patcher");
 
     private static Texture2D RedXTexture;
     public static readonly List<string> DoorSpriteRenderers = new List<string>() {"DoorFrame", "Door_Blade_1", "Door_Blade_2", "Door_Blade_3", "Door_Blade_4", "Door_Blade_5", "Door_Blade_6", "Door_Blade_7", "Door_Blade_Broken", "DoorEnterArrow_1", "DoorEnterArrow_2", "DoorEnterArrow_3", "DoorExitArrow"};
@@ -22,10 +23,13 @@ public class WorldEventsPatcher
     }
     private static readonly int eWardenObjectiveEventTypeOffset = 50;
     private int currentCount = 0;
+    private TemperatureManager TemperatureManager;
 
     public WorldEventsPatcher(Harmony harmony, Texture2D redX)
     {
         BepInEx.Logging.Logger.Sources.Add(EventsLogger);
+
+        TemperatureManager = new(harmony);
 
         RedXTexture = redX;
         // Prevent the texture from unloading if we run a level more than once per session
@@ -42,6 +46,8 @@ public class WorldEventsPatcher
         TeleportResourcePack teleportResourcePack = new();
         TeleportPocketItems teleportPocketItems = new();
         AddMovementSpeed addMovementSpeed = new();
+        ActivateTemperature activateTemperature = new(TemperatureManager);
+        DeactivateTemperature deactivateTemperature = new(TemperatureManager);
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -53,6 +59,8 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(teleportResourcePack);
         AddToCustomWorldEvents(teleportPocketItems);
         AddToCustomWorldEvents(addMovementSpeed);
+        AddToCustomWorldEvents(activateTemperature);
+        AddToCustomWorldEvents(deactivateTemperature);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)

@@ -19,7 +19,7 @@ public class FixBaseGameBugs
     }
     
     /**
-     * Base game bug: The infection plane in dimensions other than reality appears to ahve the dimension groundY parameter added twice when it should only be added once
+     * Base game bug: The infection plane in dimensions other than reality appears to have the dimension groundY parameter added twice when it should only be added once
      * Fix: Subtract the groundY if we are in another dimension
      */
     static void FixInfectionPlanesInDimensions(LocalPlayerAgentSettings __instance, float amount)
