@@ -83,6 +83,15 @@ public class TemperatureManager
         }
     }
     
+    
+    public void SetTemperatureBounds(float lower, float upper)
+    {
+        if (temperatureTracker != null)
+        {
+            temperatureTracker.GetComponent<TemperatureUpdater>().SetTemperatureBounds(lower, upper);
+        }
+    }
+    
     // NETWORKING
 
     private readonly string SYNC_TEMP = "SyncTemperature";

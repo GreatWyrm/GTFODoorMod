@@ -23,8 +23,10 @@ public class TemperatureUpdater : MonoBehaviour
     private readonly Color TEMP_WARN_THRESHOLD_COLOR = Color.yellow;
     private readonly float TEMP_DAMAGE_THRESHOLD = 40f;
     private readonly Color TEMP_DAMAGE_THRESHOLD_COLOR = Color.red;
-    private readonly float MINIMUM_TEMPERATURE = 0f;
-    private readonly float MAXIMUM_TEMPERATURE = 60f;
+    private static float DEFAULT_MINIMUM_TEMPERATURE = 30f;
+    private float currentMinumumTemperature = DEFAULT_MINIMUM_TEMPERATURE;
+    private static float DEFAULT_MAXIMUM_TEMPERATURE = 50f;
+    private float currentMaximumTemperature = DEFAULT_MAXIMUM_TEMPERATURE;
     
     // Callbacks
     private Action<float, Color, string> displayCallback;
@@ -52,6 +54,12 @@ public class TemperatureUpdater : MonoBehaviour
     {
         currentTemp = temp;
     }
+    
+    public void SetTemperatureBounds(float lower, float upper)
+    {
+        this.currentMinumumTemperature = lower;
+        this.currentMaximumTemperature = upper;
+    }
 
     public void AddTemporaryCooling(float duration, float rate)
     {
@@ -78,7 +86,7 @@ public class TemperatureUpdater : MonoBehaviour
                 currentTemp += tempRate * delta;
                 currentSyncTimer += delta;
             }
-            currentTemp = Mathf.Clamp(currentTemp, MINIMUM_TEMPERATURE, MAXIMUM_TEMPERATURE);
+            currentTemp = Mathf.Clamp(currentTemp, currentMinumumTemperature, currentMaximumTemperature);
             
             if (currentSyncTimer >= TEMP_SYNC_TIMER)
             {

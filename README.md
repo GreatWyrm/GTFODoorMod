@@ -23,6 +23,8 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | ActivateTemperature                 | 59        | Duration - The starting temperature, FogTransitionDuration - the increase rate                              |
 | DeactivateTemperature               | 60        | Nothing                                                                                                     |
 | StartCooling                        | 61        | Duration - The cooling duration, FogTransitionDuration - the cooling rate                                   |
+| SetTemperatureBounds                | 62        | Duration - The lower bound, FogTransitionDuration - the upper bound                                         |
+| ForceSolveUplink                    | 63        | LocalIndex - The target zone that the uplink is currently in                                                |
 The Type field should be filled in with the number in the Id column.
 
 TeleportResourcePack event will only work when the source player has a resource pack to teleport.
