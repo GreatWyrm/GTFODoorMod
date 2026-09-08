@@ -51,6 +51,7 @@ public class WorldEventsPatcher
         StartTemperatureCooling cooling = new(TemperatureManager);
         SetTemperatureBounds temperatureBounds = new(TemperatureManager);
         ForceSolveUplink forceSolveUplink = new();
+        ChangeMainObjectiveText changeMainObjectiveText = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -67,6 +68,7 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(cooling);
         AddToCustomWorldEvents(temperatureBounds);
         AddToCustomWorldEvents(forceSolveUplink);
+        AddToCustomWorldEvents(changeMainObjectiveText);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
