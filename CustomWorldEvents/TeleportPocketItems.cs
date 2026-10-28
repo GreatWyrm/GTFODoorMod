@@ -1,5 +1,6 @@
 using GameData;
 using Player;
+using SNetwork;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -9,6 +10,11 @@ public class TeleportPocketItems : AbstractWorldEvent
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eventData)
     {
+        if (!SNet.IsMaster)
+        {
+            return;
+        }
+        
         int source = eventData.Count;
         int destination = (int)eventData.EnemyID;
 
@@ -42,21 +48,19 @@ public class TeleportPocketItems : AbstractWorldEvent
                 // Retrieve pocket item id
                 if (pocketItemList.Count > 0)
                 {
-                    PocketItem pocketItem = pocketItemList._items[0];
-                    // Ensure list exists in destination
-                    if (!destinationBackpack.ItemIDToPocketItemGroup.ContainsKey(pocketItem.itemID))
-                    {
-                        destinationBackpack.ItemIDToPocketItemGroup.Add(pocketItem.itemID, new Il2CppSystem.Collections.Generic.List<PocketItem>());
-                        destinationBackpack.PocketItemsGroups.Add(destinationBackpack.ItemIDToPocketItemGroup[pocketItem.itemID]);
-                    }
-                    destinationBackpack.ItemIDToPocketItemGroup[pocketItem.itemID].Add(pocketItem);
+                    PocketItem pocketItem = pocketItemList._items[j];
+                    
+                    var dataWithOwner = new pItemData_WithOwner();
+                    dataWithOwner.owningPlayer.SetPlayer(destinationBackpack.Owner);
+                    dataWithOwner.data.slot = InventorySlot.InPocket;
+                    dataWithOwner.data.itemID_gearCRC = pocketItem.itemID;
+                    dataWithOwner.data.replicatorRef = pocketItem.replicatorRef;
+                    PlayerBackpackManager.MasterAddItem(dataWithOwner);
+                    PlayerBackpackManager.TryMasterRemovePocketItemWithID(pocketItem.itemID, sourceBackpack.Owner);
                 }
             }
-            pocketItemList.Clear();
         }
-        doubleList.Clear();
-        sourceBackpack.ItemIDToPocketItemGroup.Clear();
-        eventLogger.LogInfo($"Transferred pocket items from {source} to {destination}.");
+        eventLogger.LogInfo($"Transferred pocket items from {source} ({sourceBackpack.Owner.NickName}) to {destination} ({destinationBackpack.Owner.NickName}).");
         
         // Update GUI
         PlayerBackpackManager.UpdatePocketItemGUI();

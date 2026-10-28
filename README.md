@@ -27,13 +27,15 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | ForceSolveUplink                    | 63        | LocalIndex - The target zone that the uplink is currently in                                                                                |
 | ChangeMainObjectiveText             | 64        | CustomSubObjectiveHeader, CustomSubObjective - The LocalizedText to for the header and text, Enabled - true to skip blink, false to not     |
 | ChangeObjectiveHeaderText           | 65        | WorldEventObjectFilter - The text to set as the objective header (Note: Requires a minor delay (0.01 works) if set in EventsOnElevatorLand) |
+| DisableStaminaForLevel              | 66        | Nothing                                                                                                                                     |
+| SetTreatMatterWaveProjectorAsCell   | 67        | Enabled - The state to set it to, true to treat them as cells, false to not                                                                 | 
 The Type field should be filled in with the number in the Id column.
 
 TeleportResourcePack event will only work when the source player has a resource pack to teleport.
 
 ## Compiling
 
-This project was compiled with JetBrain's Rider on Linux, but can be compiled with `dotnet build` in the project root directory.
+This project was compiled with JetBrains Rider on Linux, but can be compiled with `dotnet build` in the project root directory.
 
 You will need to create a `deps` folder and put in specific .dll files from the BepInEx interop folder, created when you launch a modded instance with [R2Modman](https://thunderstore.io/package/ebkr/r2modman/) with BepInEx installed. You can copy the specific ones listed in GTFODoorMod.csproj file, or just copy over the entire directory just to be safe.
 

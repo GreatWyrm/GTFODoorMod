@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BepInEx.Logging;
 using GameData;
+using GTFO.API;
 using GTFO.API.Utilities;
 using GTFODoorMod.Temperature;
 using HarmonyLib;
@@ -53,6 +54,8 @@ public class WorldEventsPatcher
         ForceSolveUplink forceSolveUplink = new();
         ChangeMainObjectiveText changeMainObjectiveText = new();
         ChangeObjectiveHeaderText changeObjectiveHeaderText = new();
+        DisableStaminaForLevel disableStaminaForLevel = new();
+        SetTreatMatterWaveProjectorAsCell setTreatMatterWaveProjectorAsCell = new(harmony);
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -71,6 +74,8 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(forceSolveUplink);
         AddToCustomWorldEvents(changeMainObjectiveText);
         AddToCustomWorldEvents(changeObjectiveHeaderText);
+        AddToCustomWorldEvents(disableStaminaForLevel);
+        AddToCustomWorldEvents(setTreatMatterWaveProjectorAsCell);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)
@@ -83,9 +88,8 @@ public class WorldEventsPatcher
 
         var originalExecuteEvent = typeof(WorldEventManager).GetMethod(nameof(WorldEventManager.ExecuteEvent));
         harmony.Patch(originalExecuteEvent, prefix: new HarmonyMethod(typeof(WorldEventsPatcher), nameof(ExecuteEventPrefix)));
-
-        var originalCleanupEvent = typeof(GS_AfterLevel).GetMethod(nameof(GS_AfterLevel.CleanupAfterExpedition));
-        harmony.Patch(originalCleanupEvent, postfix: new HarmonyMethod(typeof(WorldEventsPatcher), nameof(CleanupLevelPostfix)));
+        
+        LevelAPI.OnLevelCleanup += ResetLockedDoors;
         EventsLogger.LogDebug("Patching successful!");
     }
 
@@ -131,9 +135,8 @@ public class WorldEventsPatcher
         // Otherwise proceed
         return true;
     }
-
-    [HarmonyPostfix]
-    static void CleanupLevelPostfix() {
+    
+    static void ResetLockedDoors() {
         DoorLockTracker.ClearLockedDoors();
     }
 
