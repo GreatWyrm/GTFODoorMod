@@ -56,6 +56,10 @@ public class WorldEventsPatcher
         ChangeObjectiveHeaderText changeObjectiveHeaderText = new();
         DisableStaminaForLevel disableStaminaForLevel = new();
         SetTreatMatterWaveProjectorAsCell setTreatMatterWaveProjectorAsCell = new(harmony);
+        AddAgentModifier addAgentModifier = new();
+        DisableFallDamage disableFallDamage = new();
+        RefillAmmo refillAmmo = new();
+        SetFriendlyFireMulti setFriendlyFireMulti = new();
 
         EventsLogger.LogDebug("Registering events");
         AddToCustomWorldEvents(lockDoorsEvent);
@@ -76,6 +80,10 @@ public class WorldEventsPatcher
         AddToCustomWorldEvents(changeObjectiveHeaderText);
         AddToCustomWorldEvents(disableStaminaForLevel);
         AddToCustomWorldEvents(setTreatMatterWaveProjectorAsCell);
+        AddToCustomWorldEvents(addAgentModifier);
+        AddToCustomWorldEvents(disableFallDamage);
+        AddToCustomWorldEvents(refillAmmo);
+        AddToCustomWorldEvents(setFriendlyFireMulti);
         
         EventsLogger.LogDebug("Injecting events into enum...");
         foreach (var pair in _customWorldEvents)

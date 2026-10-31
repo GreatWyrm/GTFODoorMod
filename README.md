@@ -29,6 +29,10 @@ To use the new events, add a new WardenObjectiveEvent with the types and paramet
 | ChangeObjectiveHeaderText           | 65        | WorldEventObjectFilter - The text to set as the objective header (Note: Requires a minor delay (0.01 works) if set in EventsOnElevatorLand) |
 | DisableStaminaForLevel              | 66        | Nothing                                                                                                                                     |
 | SetTreatMatterWaveProjectorAsCell   | 67        | Enabled - The state to set it to, true to treat them as cells, false to not                                                                 | 
+| AddAgentModifier                    | 68        | WorldEventObjectFilter - Name of the modifier to apply, Duration - The modifier amount                                                      | 
+| DisableFallDamage                   | 69        | Nothing                                                                                                                                     |
+| RefillAmmo                          | 70        | Nothing                                                                                                                                     |
+| SetFriendlyFireMulti                | 71        | Duration - The friendly fire multipler to set                                                                                               |
 The Type field should be filled in with the number in the Id column.
 
 TeleportResourcePack event will only work when the source player has a resource pack to teleport.
