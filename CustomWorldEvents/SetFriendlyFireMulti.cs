@@ -24,8 +24,10 @@ public class SetFriendlyFireMulti : AbstractWorldEvent
 
     private void ResetValue()
     {
+        if (!NeedToResetValue) return;
+        
         PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
         pDataBlock.friendlyFireMulti = DefaultFriendlyFireMulti;
-        NeedToResetValue = true;
+        NeedToResetValue = false;
     }
 }
