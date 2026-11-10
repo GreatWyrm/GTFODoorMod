@@ -1,6 +1,5 @@
 using GameData;
 using GTFO.API;
-using Player;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -18,19 +17,15 @@ public class SetFriendlyFireMulti : AbstractWorldEvent
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eventData)
     {
-        if (PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent playerAgent))
-        {
-            playerAgent.PlayerData.friendlyFireMulti = eventData.Duration;
-            NeedToResetValue = true;
-        }
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.friendlyFireMulti = eventData.Duration;
+        NeedToResetValue = true;
     }
 
     private void ResetValue()
     {
-        if (NeedToResetValue && PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent playerAgent))
-        {
-            playerAgent.PlayerData.friendlyFireMulti = DefaultFriendlyFireMulti;
-            NeedToResetValue = false;
-        }
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.friendlyFireMulti = DefaultFriendlyFireMulti;
+        NeedToResetValue = true;
     }
 }

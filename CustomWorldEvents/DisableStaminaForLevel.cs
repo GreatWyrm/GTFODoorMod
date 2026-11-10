@@ -1,6 +1,5 @@
 using GameData;
 using GTFO.API;
-using Player;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -18,25 +17,23 @@ public class DisableStaminaForLevel : AbstractWorldEvent
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eData)
     {
-        if (PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent playerAgent))
-        {
-            playerAgent.PlayerData.StaminaEnableAffectMeleeSpeed = false;
-            playerAgent.PlayerData.StaminaEnableAffectMoveSpeed = false;
-            playerAgent.PlayerData.StaminaEnableAffectStrafeSpeed = false;
-            playerAgent.PlayerData.breathingEnabled = false;
-            NeedsToResetStaminaValues = true;
-        }
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.StaminaEnableAffectMeleeSpeed = false;
+        pDataBlock.StaminaEnableAffectMoveSpeed = false;
+        pDataBlock.StaminaEnableAffectStrafeSpeed = false;
+        pDataBlock.breathingEnabled = false;
+        NeedsToResetStaminaValues = true;
     }
 
     public void ResetStaminaValues()
     {
-        if (NeedsToResetStaminaValues && PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent agent))
-        {
-            agent.PlayerData.StaminaEnableAffectMeleeSpeed = true;
-            agent.PlayerData.StaminaEnableAffectMoveSpeed = true;
-            agent.PlayerData.StaminaEnableAffectStrafeSpeed = true;
-            agent.PlayerData.breathingEnabled = true;
-            NeedsToResetStaminaValues = false;
-        }
+        if (!NeedsToResetStaminaValues) return;
+        
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.StaminaEnableAffectMeleeSpeed = true;
+        pDataBlock.StaminaEnableAffectMoveSpeed = true;
+        pDataBlock.StaminaEnableAffectStrafeSpeed = true;
+        pDataBlock.breathingEnabled = true;
+        NeedsToResetStaminaValues = false;
     }
 }

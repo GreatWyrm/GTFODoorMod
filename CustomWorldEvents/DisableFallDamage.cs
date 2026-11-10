@@ -1,6 +1,5 @@
 using GameData;
 using GTFO.API;
-using Player;
 
 namespace GTFODoorMod.CustomWorldEvents;
 
@@ -16,21 +15,19 @@ public class DisableFallDamage : AbstractWorldEvent
 
     public override void OnEventTrigger(ref WardenObjectiveEventData eventData)
     {
-        if (PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent playerAgent))
-        {
-            playerAgent.PlayerData.fallDamageMinHeight = 999f;
-            playerAgent.PlayerData.fallDamageMinHeight = 1000f;
-            NeedsToResetFallValues = true;
-        }
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.fallDamageMinHeight = 999f;
+        pDataBlock.fallDamageMaxHeight = 1000f;
+        NeedsToResetFallValues = true;
     }
 
     private void ResetFallValues()
     {
-        if (this.NeedsToResetFallValues && PlayerManager.TryGetLocalPlayerAgent(out PlayerAgent playerAgent))
-        {
-            playerAgent.PlayerData.fallDamageMinHeight = 4f;
-            playerAgent.PlayerData.fallDamageMinHeight = 20f;
-            this.NeedsToResetFallValues = false;
-        }
+        if (!NeedsToResetFallValues) return;
+        
+        PlayerDataBlock pDataBlock = GameDataBlockBase<PlayerDataBlock>.GetBlock(1U);
+        pDataBlock.fallDamageMinHeight = 4f;
+        pDataBlock.fallDamageMaxHeight = 20f;
+        NeedsToResetFallValues = false;
     }
 }
