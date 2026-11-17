@@ -63,6 +63,7 @@ public class DoorPlugin : BasePlugin
         OnlyBreakLocksPatch onlyBreakLocksPatch = new OnlyBreakLocksPatch(harmony, Log);
         FixProgressionPuzzleNotUsingDimensionIndexPatch dimensionIndexPatch = new FixProgressionPuzzleNotUsingDimensionIndexPatch(harmony, Log);
         FixBaseGameBugs fixBaseGameBugs = new FixBaseGameBugs(harmony, Log);
+        FixReactorInPsychedelic fix = new(harmony, Log);
         if (psychoBuff.Value)
         {
             InfiniteAmmoEasterEgg infiniteAmmoEasterEgg = new InfiniteAmmoEasterEgg(harmony, Log);
